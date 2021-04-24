@@ -119,6 +119,9 @@ def sign_url(blob: storage.Blob, *args, **kwargs):
     Docs : https://cloud.google.com/storage/docs/access-control?hl=bg#Signed-URLs
     API : https://cloud.google.com/storage/docs/reference-methods?hl=bg#getobject
     """
+    if config.DEBUG:
+        return blob.generate_signed_url(*args, **kwargs)
+
     auth_request = Request()
     signing_credentials = compute_engine.IDTokenCredentials(
         auth_request,
@@ -133,7 +136,7 @@ def sign_url(blob: storage.Blob, *args, **kwargs):
 @app.route("/upload", methods=["POST"])
 def upload():
     f = request.files["file"]
-    name = f.filename
+    real_name = f.filename
     content_bytes = f.stream.read()
     name = blake3(content_bytes).hexdigest()
     # try:
@@ -145,15 +148,24 @@ def upload():
     #     else:
     #         name = blake3(content_bytes).hexdigest() + "." + ext.extension
 
+    content_type, _ = mimetypes.guess_type(real_name)
+    print("content type = ", content_type)
     storage_client = storage.Client()
     bucket = storage_client.bucket("fauna-images")
     blob = bucket.blob(name)
     blob.upload_from_file(
         io.BytesIO(content_bytes),
-        content_type=mimetypes.guess_type(name)[0] or "application/octet-stream",
+        content_type=content_type
+        # content_type=mimetypes.guess_type(real_name)[0] or "application/octet-stream",
     )
 
-    return sign_url(blob, expiration=datetime.timedelta(days=1))
+    signed_url = sign_url(blob, expiration=datetime.timedelta(days=1))
+    return jsonify(
+        {
+            "url": signed_url,
+            "blob": name,
+        }
+    )
 
 
 @app.route("/animalsighting/<uuid>", methods=["GET"])
@@ -166,11 +178,16 @@ def getanimalsighting(uuid):
         storage_client = storage.Client()
         bucket = storage_client.bucket("fauna-images")
         new_images = []
-        for image in r["images"]:
+        for image in r.images:
+            blob = bucket.blob(image)
             new_images.append(
-                sign_url(bucket.blob(image), expiration=datetime.timedelta(days=1))
+                sign_url(
+                    blob,
+                    expiration=datetime.timedelta(days=1),
+                    content_type=blob.content_type,
+                )
             )
-        r["images"] = new_images
+        r.images = new_images
         r = jsonify(r)
     return r
 
