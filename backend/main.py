@@ -9,6 +9,8 @@ import config
 if __name__ == "__main__":
     config.DEBUG = True
 
+import filetype
+
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
@@ -129,19 +131,25 @@ def sign_url(blob: storage.Blob, *args, **kwargs):
 def upload():
     f = request.files["file"]
     name = f.filename
-    content = f.stream
     content_bytes = f.stream.read()
-    name = blake3(content_bytes).hexdigest() + "." + name.split(".")[-1]
+    try:
+        name = blake3(content_bytes).hexdigest() + "." + name.split(".")[-1]
+    except:
+        ext = filetype.guess(content_bytes)
+        if ext == None:
+            abort(400, "Your file is invalid!")
+        else:
+            name = blake3(content_bytes).hexdigest() + "." + ext.extension
 
     storage_client = storage.Client()
-    bucket = storage_client.bucket("decisive-router-311716.appspot.com")
+    bucket = storage_client.bucket("fauna-images")
     blob = bucket.blob(name)
     blob.upload_from_file(
         io.BytesIO(content_bytes),
         content_type=mimetypes.guess_type(name)[0] or "application/octet-stream",
     )
 
-    return blob.generate_signed_url(expiration=datetime.timedelta(days=1))
+    return  blob.generate_signed_url(expiration=datetime.timedelta(days=1))
 
 
 @app.route("/animalsighting/<uuid>", methods=["GET"])
