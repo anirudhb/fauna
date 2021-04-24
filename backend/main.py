@@ -101,8 +101,9 @@ def createanimalsighting():
     coords = request.json["coordinates"]
     animals = request.json["animals"]
     poster = request.json["poster"]
+    images = request.json["images"]
     sighting = AnimalSighting(
-        location=location, coords=coords, images=[], animals=animals, poster=poster
+        location=location, coords=coords, images=images, animals=animals, poster=poster
     )
     with Session(engine) as session:
         session.add(sighting)
@@ -134,14 +135,15 @@ def upload():
     f = request.files["file"]
     name = f.filename
     content_bytes = f.stream.read()
-    try:
-        name = blake3(content_bytes).hexdigest() + "." + name.split(".")[-1]
-    except:
-        ext = filetype.guess(content_bytes)
-        if ext == None:
-            abort(400, "Your file is invalid!")
-        else:
-            name = blake3(content_bytes).hexdigest() + "." + ext.extension
+    name = blake3(content_bytes).hexdigest()
+    # try:
+    #     name = blake3(content_bytes).hexdigest() + "." + name.split(".")[-1]
+    # except:
+    #     ext = filetype.guess(content_bytes)
+    #     if ext == None:
+    #         abort(400, "Your file is invalid!")
+    #     else:
+    #         name = blake3(content_bytes).hexdigest() + "." + ext.extension
 
     storage_client = storage.Client()
     bucket = storage_client.bucket("fauna-images")
@@ -159,7 +161,17 @@ def getanimalsighting(uuid):
     with Session(engine) as session:
         stmt = select(AnimalSighting).where(AnimalSighting.id == uuid)
         sighting = session.execute(stmt).first()
-        r = jsonify(list(sighting._asdict().values())[0])
+        r = list(sighting._asdict().values())[0]
+        # sign all image urls
+        storage_client = storage.Client()
+        bucket = storage_client.bucket("fauna-images")
+        new_images = []
+        for image in r["images"]:
+            new_images.append(
+                sign_url(bucket.blob(image), expiration=datetime.timedelta(days=1))
+            )
+        r["images"] = new_images
+        r = jsonify(r)
     return r
 
 
