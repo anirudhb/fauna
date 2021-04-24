@@ -118,9 +118,10 @@ def sign_url(blob: storage.Blob, *args, **kwargs):
     API : https://cloud.google.com/storage/docs/reference-methods?hl=bg#getobject
     """
     auth_request = Request()
-    credentials, _ = google.auth.default()
     signing_credentials = compute_engine.IDTokenCredentials(
-        auth_request, "", service_account_email=credentials.service_account_email
+        auth_request,
+        "",
+        service_account_email=blob.client._credentials.service_account_email,
     )
     return blob.generate_signed_url(
         *args, **kwargs, credentials=signing_credentials, version="v4"
