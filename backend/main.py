@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 import os
 from flask import Flask
 from dotenv import load_dotenv, find_dotenv
 from get_secrets import get_secret
 
 load_dotenv(find_dotenv())
+=======
+from flask import Flask, request
+
+# Import the Secret Manager client library and vision for object detection
+from google.cloud import secretmanager, vision
+>>>>>>> 6711ee4 (Define API routes)
 
 app = Flask(__name__)
 
@@ -16,10 +23,34 @@ if not os.path.exists("cc-ca.crt"):
         f.write(cockroachdb_crt)
 cockroachdb_url = get_secret(app, "cockroachdb-url")
 
-
 @app.route("/")
 def root():
     return f"Hello, World!\nFirst 10 chars of cert: {cockroachdb_crt[:10]}\nFirst 10 chars of url: {cockroachdb_url[:10]}"
+
+@app.route("/location", methods=['GET'])
+def getevent():
+    # Get events
+    # Args - longitude, latitude, (optional default 5) distance
+    return "Hello, World!"
+
+@app.route("/addevent", methods=['POST'])
+def getevent():
+    # Add a new event
+    # Args - longitude, latitude, Animal, Photo, Username
+    return "Hello, World!"
+
+@app.route("/getevent", methods=['GET'])
+def getevent():
+    # Gets an event from UUID
+    # Args - Event UUID
+    return "Hello, World!"
+
+@app.route("/animal", methods=['POST'])
+def getevent():
+    # Search for animal and add image to DB
+    # Args - Image
+    # Returns json - animal name and url of image
+    return "Hello, World!"
 
 
 if __name__ == "__main__":
