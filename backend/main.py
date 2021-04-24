@@ -28,7 +28,7 @@ from sqlalchemy.orm import Session
 
 from google.cloud import storage, vision
 import google.auth
-from google.auth.transport import Request
+from google.auth.transport.requests import Request
 from google.auth import compute_engine
 
 from blake3 import blake3
