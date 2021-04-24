@@ -7,3 +7,4 @@ python-dotenv
 google-cloud-storage
 google-cloud-vision
 blake3
+requests

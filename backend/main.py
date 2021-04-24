@@ -1,5 +1,7 @@
 import io
 import json
+import time
+from urllib.parse import quote
 
 from flask.wrappers import Response
 import config
@@ -23,7 +25,10 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from google.cloud import storage, vision
+import google.auth
+from google.auth import compute_engine
 
+import requests
 from blake3 import blake3
 
 import datetime
@@ -103,6 +108,21 @@ def createanimalsighting():
         # s = json.dumps(sighting.as_dict())
     # r = Response(s, content_type="application/json")
     return r
+
+
+def sign_url(blob: storage.Blob, *args, **kwargs):
+    """cloudstorage signed url to download cloudstorage object without login
+    Docs : https://cloud.google.com/storage/docs/access-control?hl=bg#Signed-URLs
+    API : https://cloud.google.com/storage/docs/reference-methods?hl=bg#getobject
+    """
+    auth_request = requests.Request()
+    credentials, _ = google.auth.default()
+    signing_credentials = compute_engine.IDTokenCredentials(
+        auth_request, "", service_account_email=credentials.service_account_email
+    )
+    return blob.generate_signed_url(
+        *args, **kwargs, credentials=signing_credentials, version="v4"
+    )
 
 
 @app.route("/upload", methods=["POST"])
