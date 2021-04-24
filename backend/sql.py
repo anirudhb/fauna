@@ -2,7 +2,7 @@ import typing
 from sqlalchemy import Column, create_engine
 from cockroachdb.sqlalchemy.dialect import UUID
 from sqlalchemy.sql.functions import func
-from sqlalchemy.sql.sqltypes import ARRAY, DateTime, String
+from sqlalchemy.sql.sqltypes import ARRAY, DateTime, String, Float
 from sqlalchemy.ext.declarative import declarative_base
 from dataclasses import dataclass
 
