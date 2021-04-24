@@ -149,7 +149,7 @@ def upload():
         content_type=mimetypes.guess_type(name)[0] or "application/octet-stream",
     )
 
-    return  blob.generate_signed_url(expiration=datetime.timedelta(days=1))
+    return sign_url(blob, expiration=datetime.timedelta(days=1))
 
 
 @app.route("/animalsighting/<uuid>", methods=["GET"])
