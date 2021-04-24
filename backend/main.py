@@ -18,6 +18,7 @@ from flask import Flask, request
 
 from get_secrets import get_secret
 from sql import engine, AnimalSighting
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 import datetime
@@ -95,6 +96,15 @@ def createanimalsighting():
         r = jsonify(sighting)
         # s = json.dumps(sighting.as_dict())
     # r = Response(s, content_type="application/json")
+    return r
+
+
+@app.route("/animalsighting/<uuid>", methods=["GET"])
+def getanimalsighting(uuid):
+    with Session(engine) as session:
+        stmt = select(AnimalSighting).where(AnimalSighting.id == uuid)
+        sighting = session.execute(stmt).first()
+        r = jsonify(list(sighting._asdict().values())[0])
     return r
 
 
