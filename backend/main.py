@@ -18,6 +18,7 @@ from flask import Flask, request
 
 from get_secrets import get_secret
 from sql import engine, AnimalSighting
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from google.cloud import storage, vision
@@ -114,6 +115,15 @@ def upload():
     blob.upload_from_file(content)
 
     return("https://decisive-router-311716.appspot.com/"+name)
+
+
+@app.route("/animalsighting/<uuid>", methods=["GET"])
+def getanimalsighting(uuid):
+    with Session(engine) as session:
+        stmt = select(AnimalSighting).where(AnimalSighting.id == uuid)
+        sighting = session.execute(stmt).first()
+        r = jsonify(list(sighting._asdict().values())[0])
+    return r
 
 
 if __name__ == "__main__":
