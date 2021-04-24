@@ -1,38 +1,20 @@
+import os
 from flask import Flask
+from dotenv import load_dotenv, find_dotenv
+from get_secrets import get_secret
 
-# Import the Secret Manager client library.
-from google.cloud import secretmanager
+load_dotenv(find_dotenv())
 
 app = Flask(__name__)
 
-PROJECT_ID = "decisive-router-311716"
-# gets secret values
-def get_secret(secret_id: str) -> str:
-    """
-    Access the payload for the given secret version if one exists. The version
-    can be a version number as a string (e.g. "5") or an alias (e.g. "latest").
-    """
+if __name__ == "__main__":
+    app.debug = True
 
-    # Create the Secret Manager client.
-    client = secretmanager.SecretManagerServiceClient()
-
-    # Build the resource name of the secret version.
-    name = f"projects/{PROJECT_ID}/secrets/{secret_id}/versions/latest"
-
-    # Access the secret version.
-    response = client.access_secret_version(request={"name": name})
-
-    # Print the secret payload.
-    #
-    # WARNING: Do not print the secret in a production environment - this
-    # snippet is showing how to access the secret material.
-    payload = response.payload.data.decode("UTF-8")
-    return payload
-    # print("Plaintext: {}".format(payload))
-
-
-cockroachdb_crt = get_secret("cockroachdb-cc-ca-crt")
-cockroachdb_url = get_secret("cockroachdb-url")
+cockroachdb_crt = get_secret(app, "cockroachdb-cc-ca-crt")
+if not os.path.exists("cc-ca.crt"):
+    with open("cc-ca.crt", "w") as f:
+        f.write(cockroachdb_crt)
+cockroachdb_url = get_secret(app, "cockroachdb-url")
 
 
 @app.route("/")

@@ -3,3 +3,4 @@ google-cloud-secret-manager
 sqlalchemy
 sqlalchemy-cockroachdb
 psycopg2
+python-dotenv
