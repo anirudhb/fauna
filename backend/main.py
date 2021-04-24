@@ -98,10 +98,11 @@ def getevent():
 @app.route("/animalsighting", methods=["POST"])
 def createanimalsighting():
     location = request.json["location"]
+    coords = request.json["coordinates"]
     animals = request.json["animals"]
     poster = request.json["poster"]
     sighting = AnimalSighting(
-        location=location, images=[], animals=animals, poster=poster
+        location=location, coords=coords, images=[], animals=animals, poster=poster
     )
     with Session(engine) as session:
         session.add(sighting)

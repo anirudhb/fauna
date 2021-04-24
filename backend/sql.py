@@ -20,6 +20,8 @@ class AnimalSighting(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     location: str
     location = Column(String)
+    coords: typing.List[float]
+    coords = Column(ARRAY(Float, as_tuple=True))
     images: typing.List[str]
     images = Column(ARRAY(String))
     animals: typing.List[str]
