@@ -1,16 +1,9 @@
-<<<<<<< HEAD
 import os
 from flask import Flask
 from dotenv import load_dotenv, find_dotenv
 from get_secrets import get_secret
 
 load_dotenv(find_dotenv())
-=======
-from flask import Flask, request
-
-# Import the Secret Manager client library and vision for object detection
-from google.cloud import secretmanager, vision
->>>>>>> 6711ee4 (Define API routes)
 
 app = Flask(__name__)
 
