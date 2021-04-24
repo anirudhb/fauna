@@ -1,17 +1,17 @@
 import os
-import flask
+import config
 
 # Import the Secret Manager client library.
 from google.cloud import secretmanager
 
 PROJECT_ID = "decisive-router-311716"
 # gets secret values
-def get_secret(app: flask.Flask, secret_id: str) -> str:
+def get_secret(secret_id: str) -> str:
     """
     Access the payload for the given secret version if one exists. The version
     can be a version number as a string (e.g. "5") or an alias (e.g. "latest").
     """
-    if app.debug:
+    if config.DEBUG:
         if secret_id == "cockroachdb-cc-ca-crt":
             with open("cc-ca.crt", "r") as f:
                 return f.read()

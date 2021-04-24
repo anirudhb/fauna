@@ -1,49 +1,101 @@
-import os
-from flask import Flask
+import json
+
+from flask.wrappers import Response
+import config
+
+if __name__ == "__main__":
+    config.DEBUG = True
+
 from dotenv import load_dotenv, find_dotenv
-from get_secrets import get_secret
 
 load_dotenv(find_dotenv())
 
+
+import os
+
+from flask.json import jsonify, JSONEncoder
+from flask import Flask, request
+
+from get_secrets import get_secret
+from sql import engine, AnimalSighting
+from sqlalchemy.orm import Session
+
+import datetime
+
 app = Flask(__name__)
 
-if __name__ == "__main__":
-    app.debug = True
 
-cockroachdb_crt = get_secret(app, "cockroachdb-cc-ca-crt")
+class CustomJSONEncoder(JSONEncoder):
+    "Add support for serializing timedeltas"
+
+    def default(self, o):
+        if type(o) == datetime.timedelta:
+            return str(o)
+        elif type(o) == datetime.datetime:
+            return o.isoformat()
+        else:
+            return super().default(o)
+
+
+app.json_encoder = CustomJSONEncoder
+
+
+cockroachdb_crt = get_secret("cockroachdb-cc-ca-crt")
 if not os.path.exists("cc-ca.crt"):
     with open("cc-ca.crt", "w") as f:
         f.write(cockroachdb_crt)
-cockroachdb_url = get_secret(app, "cockroachdb-url")
+cockroachdb_url = get_secret("cockroachdb-url")
+
 
 @app.route("/")
 def root():
     return f"Hello, World!\nFirst 10 chars of cert: {cockroachdb_crt[:10]}\nFirst 10 chars of url: {cockroachdb_url[:10]}"
 
-@app.route("/location", methods=['GET'])
+
+@app.route("/location", methods=["GET"])
 def getevent():
     # Get events
     # Args - longitude, latitude, (optional default 5) distance
     return "Hello, World!"
 
-@app.route("/addevent", methods=['POST'])
-def getevent():
-    # Add a new event
-    # Args - longitude, latitude, Animal, Photo, Username
-    return "Hello, World!"
 
-@app.route("/getevent", methods=['GET'])
-def getevent():
-    # Gets an event from UUID
-    # Args - Event UUID
-    return "Hello, World!"
+# @app.route("/addevent", methods=["POST"])
+# def getevent():
+#     # Add a new event
+#     # Args - longitude, latitude, Animal, Photo, Username
+#     return "Hello, World!"
 
-@app.route("/animal", methods=['POST'])
-def getevent():
-    # Search for animal and add image to DB
-    # Args - Image
-    # Returns json - animal name and url of image
-    return "Hello, World!"
+
+# @app.route("/getevent", methods=["GET"])
+# def getevent():
+#     # Gets an event from UUID
+#     # Args - Event UUID
+#     return "Hello, World!"
+
+
+# @app.route("/animal", methods=["POST"])
+# def getevent():
+#     # Search for animal and add image to DB
+#     # Args - Image
+#     # Returns json - animal name and url of image
+#     return "Hello, World!"
+
+
+@app.route("/animalsighting", methods=["POST"])
+def createanimalsighting():
+    location = request.json["location"]
+    animals = request.json["animals"]
+    poster = request.json["poster"]
+    sighting = AnimalSighting(
+        location=location, images=[], animals=animals, poster=poster
+    )
+    with Session(engine) as session:
+        session.add(sighting)
+        session.commit()
+        r = jsonify(sighting)
+        # s = json.dumps(sighting.as_dict())
+    # r = Response(s, content_type="application/json")
+    return r
 
 
 if __name__ == "__main__":
