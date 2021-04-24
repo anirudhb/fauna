@@ -20,6 +20,10 @@ from get_secrets import get_secret
 from sql import engine, AnimalSighting
 from sqlalchemy.orm import Session
 
+from google.cloud import storage, vision
+
+from blake3 import blake3
+
 import datetime
 
 app = Flask(__name__)
@@ -96,6 +100,20 @@ def createanimalsighting():
         # s = json.dumps(sighting.as_dict())
     # r = Response(s, content_type="application/json")
     return r
+
+@app.route("upload", methods=['POST'])
+def upload():
+    f = request.files['file']
+    name = f.filename
+    content = f.stream
+    name = blake3(bytes(name, 'utf-8')).hexdigest()+"."+name.split('.')[-1] 
+
+    storage_client = storage.Client()
+    bucket = storage_client.bucket("decisive-router-311716.appspot.com")
+    blob = bucket.blob(name)
+    blob.upload_from_file(content)
+
+    return("https://decisive-router-311716.appspot.com/"+name)
 
 
 if __name__ == "__main__":

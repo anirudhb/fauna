@@ -4,4 +4,6 @@ sqlalchemy
 sqlalchemy-cockroachdb
 psycopg2
 python-dotenv
-
+google-cloud-storage
+google-cloud-vision
+blake3
