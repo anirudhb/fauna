@@ -41,9 +41,9 @@ app.json_encoder = CustomJSONEncoder
 
 
 cockroachdb_crt = get_secret("cockroachdb-cc-ca-crt")
-if not os.path.exists("cc-ca.crt"):
-    with open("cc-ca.crt", "w") as f:
-        f.write(cockroachdb_crt)
+# if not os.path.exists("cc-ca.crt"):
+#     with open("cc-ca.crt", "w") as f:
+#         f.write(cockroachdb_crt)
 cockroachdb_url = get_secret("cockroachdb-url")
 
 
