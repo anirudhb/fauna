@@ -25,6 +25,9 @@ from get_secrets import get_secret
 from sql import engine, AnimalSighting
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+import geoalchemy2
+import geomet.wkb
+import binascii
 
 from google.cloud import storage, vision
 import google.auth
@@ -47,6 +50,8 @@ class CustomJSONEncoder(JSONEncoder):
             return str(o)
         elif type(o) == datetime.datetime:
             return o.isoformat()
+        elif type(o) == geoalchemy2.WKBElement:
+            return geomet.wkb.loads(binascii.a2b_hex(str(o)))["coordinates"]
         else:
             return super().default(o)
 
@@ -99,6 +104,7 @@ def getevent():
 def createanimalsighting():
     location = request.json["location"]
     coords = request.json["coordinates"]
+    coords = f"POINT({coords[0]} {coords[1]})"
     animals = request.json["animals"]
     poster = request.json["poster"]
     images = request.json["images"]

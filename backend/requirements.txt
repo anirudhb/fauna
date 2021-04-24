@@ -9,3 +9,5 @@ google-cloud-vision
 blake3
 requests
 filetype
+geoalchemy2
+geomet

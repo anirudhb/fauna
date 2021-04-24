@@ -1,9 +1,11 @@
 import typing
+from geoalchemy2.types import Geography
 from sqlalchemy import Column, create_engine
 from cockroachdb.sqlalchemy.dialect import UUID
 from sqlalchemy.sql.functions import func
 from sqlalchemy.sql.sqltypes import ARRAY, DateTime, String, Float
 from sqlalchemy.ext.declarative import declarative_base
+from geoalchemy2 import Geometry
 from dataclasses import dataclass
 
 import uuid
@@ -20,8 +22,8 @@ class AnimalSighting(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     location: str
     location = Column(String)
-    coords: typing.List[float]
-    coords = Column(ARRAY(Float, as_tuple=True))
+    coords: Geography
+    coords = Column(Geography("POINT", srid=4326))
     images: typing.List[str]
     images = Column(ARRAY(String))
     animals: typing.List[str]
