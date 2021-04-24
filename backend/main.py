@@ -28,9 +28,9 @@ from sqlalchemy.orm import Session
 
 from google.cloud import storage, vision
 import google.auth
+from google.auth.transport import Request
 from google.auth import compute_engine
 
-import requests
 from blake3 import blake3
 
 import datetime
@@ -117,7 +117,7 @@ def sign_url(blob: storage.Blob, *args, **kwargs):
     Docs : https://cloud.google.com/storage/docs/access-control?hl=bg#Signed-URLs
     API : https://cloud.google.com/storage/docs/reference-methods?hl=bg#getobject
     """
-    auth_request = requests.Request()
+    auth_request = Request()
     credentials, _ = google.auth.default()
     signing_credentials = compute_engine.IDTokenCredentials(
         auth_request, "", service_account_email=credentials.service_account_email
