@@ -2,3 +2,5 @@ venv/
 cc-ca.crt
 .env
 __pycache__
+gac.json
+*.jpg

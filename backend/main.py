@@ -1,3 +1,4 @@
+import io
 import json
 
 from flask.wrappers import Response
@@ -26,6 +27,7 @@ from google.cloud import storage, vision
 from blake3 import blake3
 
 import datetime
+import mimetypes
 
 app = Flask(__name__)
 
@@ -102,19 +104,24 @@ def createanimalsighting():
     # r = Response(s, content_type="application/json")
     return r
 
-@app.route("upload", methods=['POST'])
+
+@app.route("/upload", methods=["POST"])
 def upload():
-    f = request.files['file']
+    f = request.files["file"]
     name = f.filename
     content = f.stream
-    name = blake3(bytes(name, 'utf-8')).hexdigest()+"."+name.split('.')[-1] 
+    content_bytes = f.stream.read()
+    name = blake3(content_bytes).hexdigest() + "." + name.split(".")[-1]
 
     storage_client = storage.Client()
     bucket = storage_client.bucket("decisive-router-311716.appspot.com")
     blob = bucket.blob(name)
-    blob.upload_from_file(content)
+    blob.upload_from_file(
+        io.BytesIO(content_bytes),
+        content_type=mimetypes.guess_type(name)[0] or "application/octet-stream",
+    )
 
-    return("https://decisive-router-311716.appspot.com/"+name)
+    return blob.generate_signed_url(expiration=datetime.timedelta(days=1))
 
 
 @app.route("/animalsighting/<uuid>", methods=["GET"])
