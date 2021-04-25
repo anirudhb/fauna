@@ -92,8 +92,19 @@ def getevent():
 #     return "Hello, World!"
 
 
-# @app.route("/animal", methods=["POST"])
-# def getevent():
+@app.route("/identify", methods=["GET"])
+def identify():
+    uri = request.form.get("url")
+    client = vision.ImageAnnotatorClient()
+
+    image = vision.Image()
+    image.source.image_uri = uri
+
+     objects = client.object_localization(
+        image=image).localized_object_annotations
+    
+    object_ = objects[0]
+    return(object_.name)
 #     # Search for animal and add image to DB
 #     # Args - Image
 #     # Returns json - animal name and url of image
