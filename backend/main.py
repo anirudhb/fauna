@@ -1,7 +1,7 @@
 import io
 import json
 import time
-from urllib.parse import quote
+from urllib.parse import quote, unquote, unquote_plus
 
 from flask.wrappers import Response
 import config
@@ -108,7 +108,7 @@ def user():
 @app.route("/identify", methods=["GET"])
 def identify():
     try:
-        uri = request.headers.get("url")
+        uri = unquote_plus(request.args.get("url"))
     except:
         uri = "gs://fauna-images/072ac133a614a3c9373b3493ba0b48492bc69c49de8ff47b6d5b7a7f70f22731"
     
@@ -137,7 +137,7 @@ def identify():
 @app.route("/identifyall", methods=["GET"])
 def identifyall():
     try:
-        uri = request.headers.get("url")
+        uri = unquote_plus(request.args.get("url"))
     except:
         uri = "gs://fauna-images/072ac133a614a3c9373b3493ba0b48492bc69c49de8ff47b6d5b7a7f70f22731"
     
