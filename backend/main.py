@@ -94,7 +94,11 @@ def getevent():
 
 @app.route("/identify", methods=["GET"])
 def identify():
-    uri = request.form.get("url")
+    #try:
+    #    uri = request.headers.get("url")
+    #except:
+    uri = "gs://fauna-images/072ac133a614a3c9373b3493ba0b48492bc69c49de8ff47b6d5b7a7f70f22731"
+    
     client = vision.ImageAnnotatorClient()
 
     image = vision.Image()
