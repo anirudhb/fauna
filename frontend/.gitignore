@@ -13,3 +13,17 @@ web-build/
 .DS_Store
 
 build
+
+**/doc/api/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+**/generated_plugin_registrant.dart
+.packages
+.pub-cache/
+.pub/
+build/
+flutter_*.png
+linked_*.ds
+unlinked.ds
+unlinked_spec.ds

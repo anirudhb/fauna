@@ -4,3 +4,5 @@ cc-ca.crt
 __pycache__
 gac.json
 *.jpg
+cockroach-v20.2.8.windows-6.2-amd64
+cockroach-v20.2.8.windows-6.2-amd64.zip
