@@ -29,6 +29,14 @@ class _Nav extends State<Nav> {
           iconData: Icons.map,
           label: 'Map',
         ),
+         FFNavigationBarItem(
+          iconData: Icons.location_pin,
+          label: 'Report',
+        ),
+         FFNavigationBarItem(
+          iconData: Icons.notifications,
+          label: 'Alerts',
+        ),
         FFNavigationBarItem(
           iconData: Icons.settings,
           label: 'Profile',

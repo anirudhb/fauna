@@ -62,16 +62,10 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "convert",
-      "rootUri": "file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/convert-2.1.1",
-      "packageUri": "lib/",
-      "languageVersion": "1.17"
-    },
-    {
       "name": "crypto",
-      "rootUri": "file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-2.1.5",
+      "rootUri": "file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-3.0.1",
       "packageUri": "lib/",
-      "languageVersion": "2.3"
+      "languageVersion": "2.12"
     },
     {
       "name": "cupertino_icons",
@@ -140,8 +134,20 @@
       "languageVersion": "2.1"
     },
     {
+      "name": "floating_bottom_navigation_bar",
+      "rootUri": "file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/floating_bottom_navigation_bar-1.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///home/kronos/snap/flutter/common/flutter/packages/flutter",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_plugin_android_lifecycle",
+      "rootUri": "file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -174,6 +180,18 @@
       "rootUri": "file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_fonts-1.1.2",
       "packageUri": "lib/",
       "languageVersion": "2.3"
+    },
+    {
+      "name": "google_maps_flutter",
+      "rootUri": "file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-2.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "google_maps_flutter_platform_interface",
+      "rootUri": "file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_platform_interface-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "google_sign_in",
@@ -374,6 +392,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "stream_transform",
+      "rootUri": "file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/stream_transform-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "string_scanner",
       "rootUri": "file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.0",
       "packageUri": "lib/",
@@ -428,7 +452,7 @@
       "languageVersion": "2.11"
     }
   ],
-  "generated": "2021-04-25T04:54:34.876504Z",
+  "generated": "2021-04-25T05:58:29.272076Z",
   "generator": "pub",
   "generatorVersion": "2.13.0-211.6.beta"
 }

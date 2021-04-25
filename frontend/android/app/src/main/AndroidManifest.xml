@@ -5,6 +5,8 @@
         android:label="fauna"
         android:icon="@mipmap/launcher_icon"
         android:requestLegacyExternalStorage="true">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBuo3MxcD56NP0mlp6PnWX1Jb1Ixe2a3wY"/>
 
         <activity
             android:name=".MainActivity"

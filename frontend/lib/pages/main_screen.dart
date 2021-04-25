@@ -1,6 +1,9 @@
 import 'package:fauna_frontend/pages/map.dart';
 import 'package:fauna_frontend/pages/profile.dart';
 import 'package:fauna_frontend/widgets/navbar.dart';
+import 'package:fauna_frontend/pages/alert.dart';
+import 'package:fauna_frontend/pages/report.dart';
+
 import 'package:flutter/material.dart';
 
 class MainScreenWidget extends StatefulWidget {
@@ -24,6 +27,12 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
     _pages = [
       MapScreen(
         key: PageStorageKey("MapScreen")
+      ),
+      ReportPage(
+        key: PageStorageKey("ReportScreen")
+      ),
+      AlertPage(
+        key: PageStorageKey("AlertScreen")
       ),
       ProfileScreen(
         key: PageStorageKey("ProfileScreen")

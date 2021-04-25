@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fauna_frontend/auth/models.dart';
 import 'package:fauna_frontend/pages/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -98,10 +99,10 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                                     maxLines: 1,
                                   ),
                                   onPressed: () async {
-                                    // final user = await signInWithGoogle(context);
-                                    // if (user == null) {
-                                    //   return;
-                                    // }
+                                    final user = await signInWithGoogle(context);
+                                    if (user == null) {
+                                      return;
+                                    }
                                     await Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(

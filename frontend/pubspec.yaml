@@ -39,6 +39,8 @@ dependencies:
   location: 3.2.1
   rxdart: ^0.25.0
   flutter_svg: ^0.22.0
+  floating_bottom_navigation_bar: ^1.4.1
+  google_maps_flutter: ^2.0.3
 
 dev_dependencies:
   flutter_test:
