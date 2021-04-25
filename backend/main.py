@@ -129,13 +129,44 @@ def identify():
     for i in range(0, len(objects)):
         object_ = objects[i]
         if object_.name in animalslist:
-            return(object_.name)
+            return(jsonify({"animals": object_.name})
     
-    return("Didn't find a valid animal.")
+    return('''"animals": "Didn't find a valid animal."''')
 #     # Search for animal and add image to DB
 #     # Args - Image
 #     # Returns json - animal name and url of image
 #     return "Hello, World!"
+
+@app.route("/identifyall", methods=["GET"])
+def identify():
+    try:
+        uri = request.headers.get("url")
+    except:
+        uri = "gs://fauna-images/072ac133a614a3c9373b3493ba0b48492bc69c49de8ff47b6d5b7a7f70f22731"
+    
+    client = vision.ImageAnnotatorClient()
+
+    image = vision.Image()
+    image.source.image_uri = uri
+
+    objects = client.object_localization(
+        image=image).localized_object_annotations
+    
+    # From https://gist.githubusercontent.com/atduskgreg/3cf8ef48cb0d29cf151bedad81553a54/raw/82f142562cf50b0f6fb8010f890b2f934093553e/animals.txt
+
+    f = open("animals.txt", 'r')
+    animalslist = f.read().splitlines()
+    f.close()
+
+    s = []
+    for object_ in objects:
+        if object_.name in animalslist and object_.score >= 0.5:
+            s.append(object_.name)
+    
+    return(
+        jsonify({"animals": s})
+    )
+
 
 
 
