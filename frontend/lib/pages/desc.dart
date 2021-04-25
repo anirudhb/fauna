@@ -122,9 +122,9 @@ class _DescriptionPageState extends State<DescriptionPage> {
                     icon: Padding(
                       padding: EdgeInsets.zero,
                       child: FaIcon(
-                        Icons.add,
+                        Icons.location_pin,
                         size: 20,
-                        color: Colors.transparent,
+                        color: Colors.black,
                       ),
                     ),
                     label: AutoSizeText(
