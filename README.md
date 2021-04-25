@@ -1,6 +1,6 @@
 # Fauna
 
-Los Altos Hacks V Submission - [Desmos](https://devpost.com/software/fauna-xlnfqg)
+Los Altos Hacks V Submission - [Devpost](https://devpost.com/software/fauna-xlnfqg)
 
 ## Inspiration
 
