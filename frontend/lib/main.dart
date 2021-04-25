@@ -11,20 +11,21 @@ void main() async {
 }
 
 class Fauna extends StatefulWidget {
-
   @override
   _FaunaState createState() => _FaunaState();
 }
 
 class _FaunaState extends State<Fauna> {
-  Stream<FaunaFirebaseUser> userStream;
-  FaunaFirebaseUser initialUser;
+  late Stream<FaunaFirebaseUser> userStream;
+  FaunaFirebaseUser? initialUser;
 
   @override
   void initState() {
     super.initState();
     userStream = faunaFirebaseUserStream()
-      ..listen((user) => initialUser ?? setState(() => initialUser = user));
+      ..listen((user) {
+        if (initialUser != null) setState(() => initialUser = user);
+      });
   }
 
   @override
@@ -39,9 +40,9 @@ class _FaunaState extends State<Fauna> {
                 valueColor: AlwaysStoppedAnimation<Color>(Color(0xff4b39ef)),
               ),
             )
-          : currentUser.loggedIn
-              ? MainScreenWidget()
-              : WelcomePageWidget(),
+          : currentUser != null && currentUser!.loggedIn
+          ? MainScreenWidget()
+          : WelcomePageWidget(),
     );
   }
 }

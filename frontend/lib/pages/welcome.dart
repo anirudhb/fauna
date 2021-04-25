@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WelcomePageWidget extends StatefulWidget {
-  WelcomePageWidget({Key key}) : super(key: key);
+  WelcomePageWidget({Key? key}) : super(key: key);
 
   @override
   _WelcomePageWidgetState createState() => _WelcomePageWidgetState();
@@ -75,55 +75,56 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                         child: Stack(
                           children: [
                             Align(
-                              alignment: Alignment(0, 0),
-                              child: Container(
-                                height: 44,
-                                width: 230,
-                                child: RaisedButton.icon(
-                                  icon: Padding(
-                                    padding: EdgeInsets.zero,
-                                    child: FaIcon(
-                                      Icons.add,
-                                      size: 20,
-                                      color: Colors.transparent,
-                                    ),
-                                  ),
-                                  label: AutoSizeText(
-                                    'Sign in with Google',
-                                    style: GoogleFonts.getFont(
-                                      'IBM Plex Sans',
-                                      color: Color(0xFF606060),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17,
-                                    ),
-                                    maxLines: 1,
-                                  ),
-                                  onPressed: () async {
-                                    final user = await signInWithGoogle(context);
-                                    if (user == null) {
-                                      return;
-                                    }
-                                    await Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => MainScreenWidget(),
+                                alignment: Alignment(0, 0),
+                                child: Container(
+                                  height: 44,
+                                  width: 230,
+                                  child: RaisedButton.icon(
+                                    icon: Padding(
+                                      padding: EdgeInsets.zero,
+                                      child: FaIcon(
+                                        Icons.add,
+                                        size: 20,
+                                        color: Colors.transparent,
                                       ),
-                                      (r) => false,
-                                    );
-                                  },
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                      side: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 0,
                                     ),
+                                    label: AutoSizeText(
+                                      'Sign in with Google',
+                                      style: GoogleFonts.getFont(
+                                        'IBM Plex Sans',
+                                        color: Color(0xFF606060),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17,
+                                      ),
+                                      maxLines: 1,
+                                    ),
+                                    onPressed: () async {
+                                      final user =
+                                          await signInWithGoogle(context);
+                                      if (user == null) {
+                                        return;
+                                      }
+                                      await Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              MainScreenWidget(),
+                                        ),
+                                        (r) => false,
+                                      );
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      side: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 0,
+                                      ),
+                                    ),
+                                    color: Colors.white,
+                                    textColor: Color(0xFF606060),
+                                    elevation: 4,
                                   ),
-                                  color: Colors.white,
-                                  textColor: Color(0xFF606060),
-                                  elevation: 4,
-                                ),
-                              )
-                              ),
+                                )),
                             Align(
                               alignment: Alignment(-0.83, 0),
                               child: Container(

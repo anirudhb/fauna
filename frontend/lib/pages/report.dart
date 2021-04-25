@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ReportPage extends StatefulWidget {
-  const ReportPage({Key key}) : super(key: key);
+  const ReportPage({Key? key}) : super(key: key);
 
   @override
   _ReportPageState createState() => _ReportPageState();
@@ -27,7 +27,9 @@ class _ReportPageState extends State<ReportPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DescriptionPage(image: pickedFile,),
+            builder: (context) => DescriptionPage(
+              image: pickedFile,
+            ),
           ),
         );
       } else {

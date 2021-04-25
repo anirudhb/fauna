@@ -7,7 +7,7 @@ import 'package:fauna_frontend/pages/report.dart';
 import 'package:flutter/material.dart';
 
 class MainScreenWidget extends StatefulWidget {
-  MainScreenWidget({Key key}) : super(key: key);
+  MainScreenWidget({Key? key}) : super(key: key);
 
   @override
   _MainScreenWidgetState createState() => _MainScreenWidgetState();
@@ -18,27 +18,19 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
 
   final PageStorageBucket bucket = PageStorageBucket();
   int _selectedIndex = 0;
-  List<Widget> _pages;
+  List<Widget> _pages = [];
 
   @override
   void initState() {
     super.initState();
 
     _pages = [
-      MapScreen(
-        key: PageStorageKey("MapScreen")
-      ),
-      ReportPage(
-        key: PageStorageKey("ReportScreen")
-      ),
-      AlertPage(
-        key: PageStorageKey("AlertScreen")
-      ),
-      ProfileScreen(
-        key: PageStorageKey("ProfileScreen")
-      )
+      MapScreen(key: PageStorageKey("MapScreen")),
+      ReportPage(key: PageStorageKey("ReportScreen")),
+      AlertPage(key: PageStorageKey("AlertScreen")),
+      ProfileScreen(key: PageStorageKey("ProfileScreen"))
     ];
-  } 
+  }
 
   Widget _bottomNavBar() {
     return Nav(
@@ -54,12 +46,8 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      bottomNavigationBar: _bottomNavBar(),
-      body: PageStorage(
-        child: _pages[_selectedIndex],
-        bucket: bucket
-      )
-    );
+        key: scaffoldKey,
+        bottomNavigationBar: _bottomNavBar(),
+        body: PageStorage(child: _pages[_selectedIndex], bucket: bucket));
   }
 }

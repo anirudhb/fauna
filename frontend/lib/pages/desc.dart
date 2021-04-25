@@ -9,22 +9,16 @@ import 'package:image_picker/image_picker.dart';
 
 class DescriptionPage extends StatefulWidget {
   final PickedFile image;
-  
-  const DescriptionPage({Key key, this.image}) : super(key: key);
+
+  const DescriptionPage({Key? key, required this.image}) : super(key: key);
 
   @override
   _DescriptionPageState createState() => _DescriptionPageState();
 }
 
 class _DescriptionPageState extends State<DescriptionPage> {
-    TextEditingController textController;
+  TextEditingController textController = TextEditingController();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    textController = TextEditingController();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,53 +108,52 @@ class _DescriptionPageState extends State<DescriptionPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                child: Container(
-                  height: 44,
-                  width: 230,
-                  child: RaisedButton.icon(
-                    icon: Padding(
-                      padding: EdgeInsets.zero,
-                      child: FaIcon(
-                        Icons.location_pin,
-                        size: 20,
-                        color: Colors.black,
+                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  child: Container(
+                    height: 44,
+                    width: 230,
+                    child: RaisedButton.icon(
+                      icon: Padding(
+                        padding: EdgeInsets.zero,
+                        child: FaIcon(
+                          Icons.location_pin,
+                          size: 20,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    label: AutoSizeText(
-                      'Confirm',
-                      style: GoogleFonts.getFont(
-                        'IBM Plex Sans',
-                        color: Color(0xFF606060),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17,
+                      label: AutoSizeText(
+                        'Confirm',
+                        style: GoogleFonts.getFont(
+                          'IBM Plex Sans',
+                          color: Color(0xFF606060),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 17,
+                        ),
+                        maxLines: 1,
                       ),
-                      maxLines: 1,
-                    ),
-                    onPressed: () async {
-                      await postNewSighting();
-                      // await Navigator.pushAndRemoveUntil(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => MapScreen(),
-                      //   ),
-                      //   (r) => false,
-                      // );
-                      // TODO PUSH TO MAP HERE AFTER PROCESSING THE POST REQUEST (depends on whether you want 'postNewSighting()' above to be async) (ani/soham)
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      onPressed: () async {
+                        await postNewSighting();
+                        // await Navigator.pushAndRemoveUntil(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => MapScreen(),
+                        //   ),
+                        //   (r) => false,
+                        // );
+                        // TODO PUSH TO MAP HERE AFTER PROCESSING THE POST REQUEST (depends on whether you want 'postNewSighting()' above to be async) (ani/soham)
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                         side: BorderSide(
-                        color: Colors.transparent,
-                        width: 0,
+                          color: Colors.transparent,
+                          width: 0,
+                        ),
                       ),
+                      color: Colors.white,
+                      textColor: Color(0xFF606060),
+                      elevation: 4,
                     ),
-                    color: Colors.white,
-                    textColor: Color(0xFF606060),
-                    elevation: 4,
-                  ),
-                )
-              )
+                  ))
             ],
           ),
         ),
@@ -168,7 +161,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
     );
   }
 
-  void postNewSighting() async {
+  Future<void> postNewSighting() async {
     //TODO post image/sighting here
   }
 
@@ -176,5 +169,6 @@ class _DescriptionPageState extends State<DescriptionPage> {
     //TODO process image ML here, return string of detected animal
     // the image is in the form of a file stream
     File image = File(widget.image.path);
+    return "";
   }
 }

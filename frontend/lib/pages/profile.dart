@@ -6,17 +6,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key key}) : super(key: key);
- 
+  const ProfileScreen({Key? key}) : super(key: key);
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-final scaffoldKey = GlobalKey<ScaffoldState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
-
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -27,50 +26,50 @@ final scaffoldKey = GlobalKey<ScaffoldState>();
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-           Container(
-            height: 44,
-            width: 230,
-            child: RaisedButton.icon(
-              icon: Padding(
-                padding: EdgeInsets.zero,
-                child: FaIcon(
-                  Icons.add,
-                  size: 20,
-                  color: Colors.transparent,
-                ),
-              ),
-              label: AutoSizeText(
-                'Log Out',
-                style: GoogleFonts.getFont(
-                  'IBM Plex Sans',
-                  color: Color(0xFF606060),
-                  fontWeight: FontWeight.w500,
-                  fontSize: 17,
-                ),
-                maxLines: 1,
-              ),
-              onPressed: () async {
-                await signOut();
-                await Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WelcomePageWidget(),
+            Container(
+              height: 44,
+              width: 230,
+              child: RaisedButton.icon(
+                icon: Padding(
+                  padding: EdgeInsets.zero,
+                  child: FaIcon(
+                    Icons.add,
+                    size: 20,
+                    color: Colors.transparent,
                   ),
-                  (r) => false,
-                );
-              },
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-                  side: BorderSide(
-                  color: Colors.transparent,
-                  width: 0,
                 ),
+                label: AutoSizeText(
+                  'Log Out',
+                  style: GoogleFonts.getFont(
+                    'IBM Plex Sans',
+                    color: Color(0xFF606060),
+                    fontWeight: FontWeight.w500,
+                    fontSize: 17,
+                  ),
+                  maxLines: 1,
+                ),
+                onPressed: () async {
+                  await signOut();
+                  await Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WelcomePageWidget(),
+                    ),
+                    (r) => false,
+                  );
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: BorderSide(
+                    color: Colors.transparent,
+                    width: 0,
+                  ),
+                ),
+                color: Colors.white,
+                textColor: Color(0xFF606060),
+                elevation: 4,
               ),
-              color: Colors.white,
-              textColor: Color(0xFF606060),
-              elevation: 4,
-            ),
-          )
+            )
           ],
         ),
       ),
@@ -94,7 +93,7 @@ final scaffoldKey = GlobalKey<ScaffoldState>();
                         padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                         child: InkWell(
                           onTap: () async {
-                            scaffoldKey.currentState.openDrawer();
+                            scaffoldKey.currentState?.openDrawer();
                           },
                           child: Icon(
                             Icons.keyboard_control,
@@ -122,7 +121,7 @@ final scaffoldKey = GlobalKey<ScaffoldState>();
                         shape: BoxShape.circle,
                       ),
                       child: Image.network(
-                        currentUser.user.photoURL,
+                        currentUser!.user!.photoURL!,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -130,7 +129,7 @@ final scaffoldKey = GlobalKey<ScaffoldState>();
                   Padding(
                     padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
                     child: Text(
-                      currentUser.user.displayName,
+                      currentUser!.user!.displayName!,
                       style: GoogleFonts.getFont(
                         'Quicksand',
                         color: Colors.black,

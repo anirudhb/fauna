@@ -4,14 +4,14 @@ import 'package:rxdart/rxdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final _googleSignIn = GoogleSignIn();
-User user;
+User? user;
 
-Future<User> signInOrCreateAccount(
-    BuildContext context, Future<UserCredential> Function() signInFunc) async {
+Future<User?> signInOrCreateAccount(
+    BuildContext context, Future<UserCredential?> Function() signInFunc) async {
   try {
     final userCredential = await signInFunc();
-    user = userCredential.user;
-    return userCredential.user;
+    user = userCredential?.user;
+    return userCredential?.user;
   } on FirebaseAuthException catch (e) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -23,7 +23,7 @@ Future<User> signInOrCreateAccount(
 
 Future signOut() => FirebaseAuth.instance.signOut();
 
-Future<User> signInWithGoogle(BuildContext context) async {
+Future<User?> signInWithGoogle(BuildContext context) async {
   final signInFunc = () async {
     await signOutWithGoogle().catchError((_) => null);
     final auth = await (await _googleSignIn.signIn())?.authentication;
@@ -41,11 +41,11 @@ Future signOutWithGoogle() => _googleSignIn.signOut();
 
 class FaunaFirebaseUser {
   FaunaFirebaseUser(this.user);
-  final User user;
+  final User? user;
   bool get loggedIn => user != null;
 }
 
-FaunaFirebaseUser currentUser;
+FaunaFirebaseUser? currentUser;
 bool get loggedIn => currentUser?.loggedIn ?? false;
 Stream<FaunaFirebaseUser> faunaFirebaseUserStream() => FirebaseAuth.instance
     .authStateChanges()

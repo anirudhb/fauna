@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({Key key}) : super(key: key);
+  const MapScreen({Key? key}) : super(key: key);
 
   @override
   _MapScreenState createState() => _MapScreenState();
@@ -46,7 +46,6 @@ class _MapScreenState extends State<MapScreen> {
   );
 
   void _addMarkerValues() {
-
     // get marker values here with GET request
     // iterate over them and call the '_add(lat, long)' function above for each value
   }
