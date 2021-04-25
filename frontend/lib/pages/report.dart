@@ -103,7 +103,7 @@ class _ReportPageState extends State<ReportPage> {
               ),
               InkWell(
                   onTap: () async {
-                    getImage(false);
+                    getImage(true);
                   },
                   child: Container(
                     width: 200,

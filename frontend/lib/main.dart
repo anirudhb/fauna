@@ -18,6 +18,7 @@ class Fauna extends StatefulWidget {
 class _FaunaState extends State<Fauna> {
   late Stream<FaunaFirebaseUser> userStream;
   FaunaFirebaseUser? initialUser;
+  bool waitLoading = true;
 
   @override
   void initState() {
@@ -26,6 +27,10 @@ class _FaunaState extends State<Fauna> {
       ..listen((user) {
         if (initialUser != null) setState(() => initialUser = user);
       });
+    (() async {
+      await Future.delayed(Duration(seconds: 1));
+      setState(() => waitLoading = false);
+    })();
   }
 
   @override
@@ -34,7 +39,7 @@ class _FaunaState extends State<Fauna> {
       title: 'Fauna',
       theme: ThemeData(primarySwatch: Colors.orange),
       debugShowCheckedModeBanner: false,
-      home: initialUser == null
+      home: initialUser == null && waitLoading
           ? const Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Color(0xff4b39ef)),
