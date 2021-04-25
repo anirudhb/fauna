@@ -11,19 +11,52 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  
- Completer<GoogleMapController> _controller = Completer();
+  Completer<GoogleMapController> _controller = Completer();
+
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  int id = 0;
+
+  void _add(latitude, longitude) {
+    var markerIdVal = id;
+    id++;
+    final MarkerId markerId = MarkerId(markerIdVal.toString());
+
+    final Marker marker = Marker(
+      markerId: markerId,
+      position: LatLng(latitude, longitude),
+      infoWindow: InfoWindow(
+          title: markerIdVal.toString(),
+          snippet: '*'), // TODO change this to # of animals or something
+      onTap: () {
+        _onMarkerTapped(markerId);
+      },
+    );
+
+    setState(() {
+      // adding a new marker to map
+      markers[markerId] = marker;
+    });
+  }
+
+  void _onMarkerTapped(MarkerId markerId) {}
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
   );
 
-  // static final CameraPosition _kLake = CameraPosition(
-  //     bearing: 192.8334901395799,
-  //     target: LatLng(37.43296265331129, -122.08832357078792),
-  //     tilt: 59.440717697143555,
-  //     zoom: 19.151926040649414);
+  void _addMarkerValues() {
+
+    // get marker values here with GET request
+    // iterate over them and call the '_add(lat, long)' function above for each value
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _addMarkerValues();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +67,8 @@ class _MapScreenState extends State<MapScreen> {
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
+        markers: Set<Marker>.of(markers.values),
       ),
     );
   }
-
-  // Future<void> _goToTheLake() async {
-  //   final GoogleMapController controller = await _controller.future;
-  //   controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  // }
 }
