@@ -100,7 +100,7 @@ def identify():
     image = vision.Image()
     image.source.image_uri = uri
 
-     objects = client.object_localization(
+    objects = client.object_localization(
         image=image).localized_object_annotations
     
     object_ = objects[0]
