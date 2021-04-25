@@ -23,7 +23,7 @@ from flask import Flask, request
 
 from get_secrets import get_secret
 from sql import engine, AnimalSighting
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.orm import Session
 import geoalchemy2
 import geomet.wkb
@@ -98,6 +98,25 @@ def getevent():
 #     # Args - Image
 #     # Returns json - animal name and url of image
 #     return "Hello, World!"
+
+
+
+@app.route("/nearbyanimalsightings")
+def nearbyanimalsightings():
+    lat = float(request.args.get("lat"))
+    lng = float(request.args.get("lng"))
+    point = f"POINT({lat} {lng})"
+    with Session(engine) as session:
+        # 5 miles = 8046.72 meters
+        query = session.query(AnimalSighting).filter(
+            AnimalSighting.coords.ST_DWithin(point, 8046.72)
+        )
+        res = []
+        for row in query:
+            res.append(row.id)
+        r = jsonify(res)
+    return r
+
 
 
 @app.route("/animalsighting", methods=["POST"])
