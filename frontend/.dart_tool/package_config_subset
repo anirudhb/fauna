@@ -1,5 +1,5 @@
 fauna_frontend
-2.12
+2.11
 file:///home/kronos/development/HackathonProjects/Fauna/fauna/frontend/
 file:///home/kronos/development/HackathonProjects/Fauna/fauna/frontend/lib/
 async
@@ -188,8 +188,8 @@ file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.o
 file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_platform_interface-2.0.0/lib/
 path_provider_windows
 2.12
-file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.1/
-file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.1/lib/
+file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.0/
+file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.0/lib/
 pedantic
 2.12
 file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.11.0/

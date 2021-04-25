@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 
 class Nav extends StatefulWidget {
-  int? selectedIndex;
-  Function? onChange;
+  int selectedIndex;
+  Function onChange;
 
-  Nav({Key? key, this.selectedIndex, this.onChange}) : super(key: key);
+  Nav({Key key, this.selectedIndex, this.onChange}) : super(key: key);
 
   @override
   _Nav createState() => _Nav();

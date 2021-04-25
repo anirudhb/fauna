@@ -1,6 +1,6 @@
 {
-    "name": "fauna_frontend",
-    "short_name": "fauna_frontend",
+    "name": "fauna",
+    "short_name": "fauna",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

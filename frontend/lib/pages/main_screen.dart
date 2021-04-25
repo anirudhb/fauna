@@ -4,7 +4,7 @@ import 'package:fauna_frontend/widgets/navbar.dart';
 import 'package:flutter/material.dart';
 
 class MainScreenWidget extends StatefulWidget {
-  MainScreenWidget({Key? key}) : super(key: key);
+  MainScreenWidget({Key key}) : super(key: key);
 
   @override
   _MainScreenWidgetState createState() => _MainScreenWidgetState();
@@ -15,7 +15,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
 
   final PageStorageBucket bucket = PageStorageBucket();
   int _selectedIndex = 0;
-  List<Widget>? _pages;
+  List<Widget> _pages;
 
   @override
   void initState() {
@@ -48,7 +48,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
       key: scaffoldKey,
       bottomNavigationBar: _bottomNavBar(),
       body: PageStorage(
-        child: _pages![_selectedIndex],
+        child: _pages[_selectedIndex],
         bucket: bucket
       )
     );

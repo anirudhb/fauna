@@ -1,8 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.fauna_frontend">
+    package="dev.rbansal.fauna">
+   <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="fauna_frontend"
-        android:icon="@mipmap/ic_launcher">
+        android:label="fauna"
+        android:icon="@mipmap/launcher_icon"
+        android:requestLegacyExternalStorage="true">
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

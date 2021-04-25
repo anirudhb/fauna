@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "54119213170",
+    "project_id": "decisive-router-311716",
+    "storage_bucket": "decisive-router-311716.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54119213170:android:52bc404efd401b8d6a7aeb",
+        "android_client_info": {
+          "package_name": "dev.rbansal.fauna"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54119213170-bsdldb20c66q5hbp9819vavbesrm3t8r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.rbansal.fauna",
+            "certificate_hash": "3cf6770b1e6219a9d1a337e9543d9d0c0bbf06ba"
+          }
+        },
+        {
+          "client_id": "54119213170-b26co7rr3ituh1b8vkpds617grvrql84.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuo3MxcD56NP0mlp6PnWX1Jb1Ixe2a3wY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54119213170-b26co7rr3ituh1b8vkpds617grvrql84.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "54119213170-iq822l09e5cc85u1bk0fbcf32k36dio3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.anire.fauna"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

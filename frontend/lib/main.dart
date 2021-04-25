@@ -17,13 +17,13 @@ class Fauna extends StatefulWidget {
 }
 
 class _FaunaState extends State<Fauna> {
-  Stream<FaunaFirebaseUser>? userStream;
-  FaunaFirebaseUser? initialUser;
+  Stream<FaunaFirebaseUser> userStream;
+  FaunaFirebaseUser initialUser;
 
   @override
   void initState() {
     super.initState();
-    userStream = guideyFirebaseUserStream()
+    userStream = faunaFirebaseUserStream()
       ..listen((user) => initialUser ?? setState(() => initialUser = user));
   }
 
@@ -39,7 +39,7 @@ class _FaunaState extends State<Fauna> {
                 valueColor: AlwaysStoppedAnimation<Color>(Color(0xff4b39ef)),
               ),
             )
-          : currentUser!.loggedIn
+          : currentUser.loggedIn
               ? MainScreenWidget()
               : WelcomePageWidget(),
     );

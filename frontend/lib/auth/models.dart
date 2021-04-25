@@ -7,9 +7,9 @@ class FaunaFirebaseUser {
   bool get loggedIn => user != null;
 }
 
-FaunaFirebaseUser? currentUser;
+FaunaFirebaseUser currentUser;
 bool get loggedIn => currentUser?.loggedIn ?? false;
-Stream<FaunaFirebaseUser> guideyFirebaseUserStream() => FirebaseAuth.instance
+Stream<FaunaFirebaseUser> faunaFirebaseUserStream() => FirebaseAuth.instance
     .authStateChanges()
     .debounce((user) => user == null && !loggedIn
         ? TimerStream(true, const Duration(seconds: 1))

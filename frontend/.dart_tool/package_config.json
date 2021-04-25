@@ -297,7 +297,7 @@
     },
     {
       "name": "path_provider_windows",
-      "rootUri": "file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.1",
+      "rootUri": "file:///home/kronos/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -425,10 +425,10 @@
       "name": "fauna_frontend",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.11"
     }
   ],
-  "generated": "2021-04-25T02:09:22.969862Z",
+  "generated": "2021-04-25T04:54:34.876504Z",
   "generator": "pub",
   "generatorVersion": "2.13.0-211.6.beta"
 }
