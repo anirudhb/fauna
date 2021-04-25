@@ -107,8 +107,15 @@ def identify():
     objects = client.object_localization(
         image=image).localized_object_annotations
     
-    object_ = objects[0]
-    return(object_.name)
+    # From https://gist.githubusercontent.com/atduskgreg/3cf8ef48cb0d29cf151bedad81553a54/raw/82f142562cf50b0f6fb8010f890b2f934093553e/animals.txt
+    animalslist = open("animals.txt", 'r').readlines()
+
+    for i in range(0, len(objects)):
+        object_ = objects[i]
+        if object_.name in animalslist:
+            return(object_.name)
+    
+    return("Didn't find a valid animal.")
 #     # Search for animal and add image to DB
 #     # Args - Image
 #     # Returns json - animal name and url of image
