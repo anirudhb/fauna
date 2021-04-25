@@ -39,6 +39,9 @@ from blake3 import blake3
 import datetime
 import mimetypes
 
+import sys
+sys.path.insert(0, 'libs')
+
 import pyheif
 import whatimage
 from PIL import Image
