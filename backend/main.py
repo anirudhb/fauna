@@ -91,6 +91,19 @@ def getevent():
 #     # Args - Event UUID
 #     return "Hello, World!"
 
+@app.route("/user", methods=["GET"])
+def user():
+    user = request.args.get("user")
+    with Session(engine) as session:
+
+        query = session.query(AnimalSighting).filter(
+            AnimalSighting.poster == user
+        )
+        res = []
+        for row in query:
+            res.append(row.id)
+        r = jsonify(res)
+    return r
 
 @app.route("/identify", methods=["GET"])
 def identify():
@@ -130,11 +143,15 @@ def identify():
 def nearbyanimalsightings():
     lat = float(request.args.get("lat"))
     lng = float(request.args.get("lng"))
+    try:
+        dist = float(request.args.get("dist")) * 1609.34
+    except:
+        dist = 8046.72
     point = f"POINT({lat} {lng})"
     with Session(engine) as session:
         # 5 miles = 8046.72 meters
         query = session.query(AnimalSighting).filter(
-            AnimalSighting.coords.ST_DWithin(point, 8046.72)
+            AnimalSighting.coords.ST_DWithin(point, dist)
         )
         res = []
         for row in query:
