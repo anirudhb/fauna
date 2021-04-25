@@ -108,7 +108,7 @@ def identify():
         image=image).localized_object_annotations
     
     # From https://gist.githubusercontent.com/atduskgreg/3cf8ef48cb0d29cf151bedad81553a54/raw/82f142562cf50b0f6fb8010f890b2f934093553e/animals.txt
-    with animalslist as open("animals.txt", 'r').read().splitlines()
+    with open("animals.txt", 'r').read().splitlines() as animalslist:
 
         for i in range(0, len(objects)):
             object_ = objects[i]
