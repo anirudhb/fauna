@@ -62,8 +62,10 @@ class _MapScreenState extends State<MapScreen> {
           "https://decisive-router-311716.uc.r.appspot.com/animalsighting/$uuid"));
       final r4 = jsonDecode(r3.body);
       final coords = r4["coords"];
-      final animals = r4["animals"];
-      _add(coords[0], coords[1], animals);
+      final animals = (r4["animals"] as List<dynamic>).cast<String>();
+      print(
+          "sighting latlng = $coords, ours is ${location.latitude} ${location.longitude}");
+      _add(coords[0], coords[1], animals[0]);
     }
     // get marker values here with GET request
     // iterate over them and call the '_add(lat, long)' function above for each value

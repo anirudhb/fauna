@@ -171,7 +171,7 @@ def nearbyanimalsightings():
         dist = float(request.args.get("dist")) * 1609.34
     except:
         dist = 8046.72
-    point = f"POINT({lat} {lng})"
+    point = f"POINT({lng} {lat})"
     with Session(engine) as session:
         # 5 miles = 8046.72 meters
         query = session.query(AnimalSighting).filter(
@@ -188,7 +188,7 @@ def nearbyanimalsightings():
 def createanimalsighting():
     location = request.json["location"]
     coords = request.json["coordinates"]
-    coords = f"POINT({coords[0]} {coords[1]})"
+    coords = f"POINT({coords[1]} {coords[0]})"
     animals = request.json["animals"]
     poster = request.json["poster"]
     images = request.json["images"]
