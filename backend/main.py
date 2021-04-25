@@ -168,7 +168,7 @@ def upload():
     bucket = storage_client.bucket("fauna-images")
     blob = bucket.blob(name)
     blob.upload_from_file(
-        content_bytes,
+        io.bytesIO(content_bytes),
         content_type=content_type
         # content_type=mimetypes.guess_type(real_name)[0] or "application/octet-stream",
     )
