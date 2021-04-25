@@ -37,14 +37,7 @@ from google.auth import compute_engine
 from blake3 import blake3
 
 import datetime
-import mimetypes
-
-import sys
-sys.path.insert(0, 'libs')
-
-import pyheif
-import whatimage
-from PIL import Image
+import filetype
 
 app = Flask(__name__)
 
@@ -107,6 +100,25 @@ def getevent():
 #     return "Hello, World!"
 
 
+
+@app.route("/nearbyanimalsightings")
+def nearbyanimalsightings():
+    lat = float(request.args.get("lat"))
+    lng = float(request.args.get("lng"))
+    point = f"POINT({lat} {lng})"
+    with Session(engine) as session:
+        # 5 miles = 8046.72 meters
+        query = session.query(AnimalSighting).filter(
+            AnimalSighting.coords.ST_DWithin(point, 8046.72)
+        )
+        res = []
+        for row in query:
+            res.append(row.id)
+        r = jsonify(res)
+    return r
+
+
+
 @app.route("/animalsighting", methods=["POST"])
 def createanimalsighting():
     location = request.json["location"]
@@ -148,33 +160,15 @@ def sign_url(blob: storage.Blob, *args, **kwargs):
 
 @app.route("/upload", methods=["POST"])
 def upload():
-    f = request.files["file"]
-    real_name = f.filename
-    content_bytes = f.stream.read()
-    content = io.BytesIO(content_bytes)
+    content_bytes = request.stream.read()
     name = blake3(content_bytes).hexdigest()
-    # try:
-    #     name = blake3(content_bytes).hexdigest() + "." + name.split(".")[-1]
-    # except:
-    #     ext = filetype.guess(content_bytes)
-    #     if ext == None:
-    #         abort(400, "Your file is invalid!")
-    #     else:
-    #         name = blake3(content_bytes).hexdigest() + "." + ext.extension
+    content_type = filetype.guess(content_bytes).mime
 
-    if(whatimage.identify_image(content_bytes) == "heic"):
-        content = io.BytesIO()
-        heif_file = pyheif.read_heif(content_bytes)
-        image = Image.frombytes(heif_file.mode, heif_file.size, heif_file.data, "raw", heif_file.mode, heif_file.stride,)
-        image.save(content, format="JPEG")
-
-    content_type, _ = mimetypes.guess_type(real_name)
-    print("content type = ", content_type)
     storage_client = storage.Client()
     bucket = storage_client.bucket("fauna-images")
     blob = bucket.blob(name)
     blob.upload_from_file(
-        content,
+        content_bytes,
         content_type=content_type
         # content_type=mimetypes.guess_type(real_name)[0] or "application/octet-stream",
     )
@@ -209,23 +203,6 @@ def getanimalsighting(uuid):
             )
         r.images = new_images
         r = jsonify(r)
-    return r
-
-
-@app.route("/nearbyanimalsightings")
-def nearbyanimalsightings():
-    lat = float(request.args.get("lat"))
-    lng = float(request.args.get("lng"))
-    point = f"POINT({lat} {lng})"
-    with Session(engine) as session:
-        # 5 miles = 8046.72 meters
-        query = session.query(AnimalSighting).filter(
-            AnimalSighting.coords.ST_DWithin(point, 8046.72)
-        )
-        res = []
-        for row in query:
-            res.append(row.id)
-        r = jsonify(res)
     return r
 
 
