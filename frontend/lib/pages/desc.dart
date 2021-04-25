@@ -3,10 +3,12 @@ import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fauna_frontend/auth/models.dart';
+import 'package:fauna_frontend/location.dart';
 import 'package:fauna_frontend/pages/main_screen.dart';
 import 'package:fauna_frontend/pages/map.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -213,13 +215,18 @@ class _DescriptionPageState extends State<DescriptionPage> {
 
   Future<String> createSighting(
       List<String> imageIDs, List<String> animals) async {
+    final location = await getLocation();
+    if (location == null) {
+      Navigator.pop(context);
+      return "";
+    }
     final r = await http.post(
       Uri.parse(
           "https://decisive-router-311716.uc.r.appspot.com/animalsighting"),
       body: jsonEncode({
         // TODO location stuff
         "location": "San Jose, CA",
-        "coordinates": [23.4, 52.3],
+        "coordinates": [location.latitude, location.longitude],
         "animals": animals,
         "images": imageIDs,
         "poster": currentUser!.user!.uid,
