@@ -131,7 +131,7 @@ def identify():
         if object_.name in animalslist:
             return(jsonify({"animals": object_.name})
     
-    return('''"animals": "Didn't find a valid animal."''')
+    return("Didn't find a valid animal.")
 #     # Search for animal and add image to DB
 #     # Args - Image
 #     # Returns json - animal name and url of image
