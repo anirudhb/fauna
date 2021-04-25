@@ -1,3 +1,5 @@
+import 'package:fauna_frontend/pages/map.dart';
+import 'package:fauna_frontend/pages/profile.dart';
 import 'package:fauna_frontend/widgets/navbar.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +25,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
       MapScreen(
         key: PageStorageKey("MapScreen")
       ),
-      ProfilePageWidget(
+      ProfileScreen(
         key: PageStorageKey("ProfileScreen")
       )
     ];
@@ -46,7 +48,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
       key: scaffoldKey,
       bottomNavigationBar: _bottomNavBar(),
       body: PageStorage(
-        child: _pages[_selectedIndex],
+        child: _pages![_selectedIndex],
         bucket: bucket
       )
     );

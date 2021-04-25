@@ -97,10 +97,10 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                                     maxLines: 1,
                                   ),
                                   onPressed: () async {
-                                    final user = await signInWithGoogle(context);
-                                    if (user == null) {
-                                      return;
-                                    }
+                                    // final user = await signInWithGoogle(context);
+                                    // if (user == null) {
+                                    //   return;
+                                    // }
                                     await Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
