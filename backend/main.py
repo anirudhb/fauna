@@ -43,6 +43,7 @@ app = Flask(__name__)
 
 ## REEEEDeploy
 
+
 class CustomJSONEncoder(JSONEncoder):
     "Add support for serializing timedeltas"
 
@@ -92,19 +93,19 @@ def getevent():
 #     # Args - Event UUID
 #     return "Hello, World!"
 
+
 @app.route("/user", methods=["GET"])
 def user():
     user = request.args.get("user")
     with Session(engine) as session:
 
-        query = session.query(AnimalSighting).filter(
-            AnimalSighting.poster == user
-        )
+        query = session.query(AnimalSighting).filter(AnimalSighting.poster == user)
         res = []
         for row in query:
             res.append(row.id)
         r = jsonify(res)
     return r
+
 
 @app.route("/identify", methods=["GET"])
 def identify():
@@ -112,26 +113,25 @@ def identify():
         uri = unquote_plus(request.args.get("url"))
     except:
         uri = "gs://fauna-images/072ac133a614a3c9373b3493ba0b48492bc69c49de8ff47b6d5b7a7f70f22731"
-    
+
     client = vision.ImageAnnotatorClient()
 
     image = vision.Image()
     image.source.image_uri = uri
 
-    objects = client.object_localization(
-        image=image).localized_object_annotations
-    
+    objects = client.object_localization(image=image).localized_object_annotations
+
     # From https://gist.githubusercontent.com/atduskgreg/3cf8ef48cb0d29cf151bedad81553a54/raw/82f142562cf50b0f6fb8010f890b2f934093553e/animals.txt
 
-    f = open("animals.txt", 'r')
+    f = open("animals.txt", "r")
     animalslist = f.read().splitlines()
     f.close()
 
     for i in range(0, len(objects)):
         object_ = objects[i]
         if object_.name in animalslist:
-            return object_.name 
-    
+            return object_.name
+
     return "Didn't find a valid animal."
 
 
@@ -141,18 +141,17 @@ def identifyall():
         uri = unquote_plus(request.args.get("url"))
     except:
         uri = "gs://fauna-images/072ac133a614a3c9373b3493ba0b48492bc69c49de8ff47b6d5b7a7f70f22731"
-    
+
     client = vision.ImageAnnotatorClient()
 
     image = vision.Image()
     image.source.image_uri = uri
 
-    objects = client.object_localization(
-        image=image).localized_object_annotations
-    
+    objects = client.object_localization(image=image).localized_object_annotations
+
     # From https://gist.githubusercontent.com/atduskgreg/3cf8ef48cb0d29cf151bedad81553a54/raw/82f142562cf50b0f6fb8010f890b2f934093553e/animals.txt
 
-    f = open("animals.txt", 'r')
+    f = open("animals.txt", "r")
     animalslist = f.read().splitlines()
     f.close()
 
@@ -160,12 +159,8 @@ def identifyall():
     for object_ in objects:
         if object_.name in animalslist and object_.score >= 0.5:
             s.append(object_.name)
-    
-    return(
-        jsonify({"animals": s})
-    )
 
-
+    return jsonify({"animals": s})
 
 
 @app.route("/nearbyanimalsightings")
@@ -187,7 +182,6 @@ def nearbyanimalsightings():
             res.append(row.id)
         r = jsonify(res)
     return r
-
 
 
 @app.route("/animalsighting", methods=["POST"])
@@ -222,7 +216,7 @@ def sign_url(blob: storage.Blob, *args, **kwargs):
     signing_credentials = compute_engine.IDTokenCredentials(
         auth_request,
         "",
-        service_account_email=blob.client._credentials.service_account_email,
+        service_account_email="decisive-router-311716@appspot.gserviceaccount.com",
     )
     return blob.generate_signed_url(
         *args, **kwargs, credentials=signing_credentials, version="v4"
