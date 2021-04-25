@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fauna_frontend/pages/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -30,8 +31,8 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                 children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 100, 0, 0),
-                    child: Image.asset(
-                      'assets/images/Guidey_Js-02.png',
+                    child: SvgPicture.asset(
+                      'assets/animal.svg',
                       width: 120,
                       fit: BoxFit.cover,
                     ),

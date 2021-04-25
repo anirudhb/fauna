@@ -36,9 +36,9 @@ dependencies:
   google_fonts:
   google_sign_in: ^4.0.16
   ff_navigation_bar: ^0.1.5
-  mapbox_gl: ^0.9.0
   location: 3.2.1
   rxdart: ^0.25.0
+  flutter_svg: ^0.22.0
 
 dev_dependencies:
   flutter_test:
@@ -56,8 +56,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
