@@ -14,3 +14,4 @@ geomet
 whatimage
 pyheif
 Pillow
+wheel
