@@ -7,7 +7,11 @@ import 'package:fauna_frontend/pages/report.dart';
 import 'package:flutter/material.dart';
 
 class MainScreenWidget extends StatefulWidget {
-  MainScreenWidget({Key? key}) : super(key: key);
+  final int selectedIndex;
+  MainScreenWidget({
+    Key? key,
+    this.selectedIndex = 0,
+  }) : super(key: key);
 
   @override
   _MainScreenWidgetState createState() => _MainScreenWidgetState();
@@ -23,6 +27,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
   @override
   void initState() {
     super.initState();
+    _selectedIndex = widget.selectedIndex;
 
     _pages = [
       MapScreen(key: PageStorageKey("MapScreen")),

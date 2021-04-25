@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fauna_frontend/auth/models.dart';
+import 'package:fauna_frontend/pages/main_screen.dart';
 import 'package:fauna_frontend/pages/map.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -166,7 +167,9 @@ class _DescriptionPageState extends State<DescriptionPage> {
                               await Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => MapScreen(),
+                                  builder: (context) => MainScreenWidget(
+                                    selectedIndex: 0,
+                                  ),
                                 ),
                                 (r) => false,
                               );
