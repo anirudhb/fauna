@@ -108,12 +108,15 @@ def identify():
         image=image).localized_object_annotations
     
     # From https://gist.githubusercontent.com/atduskgreg/3cf8ef48cb0d29cf151bedad81553a54/raw/82f142562cf50b0f6fb8010f890b2f934093553e/animals.txt
-    with open("animals.txt", 'r').read().splitlines() as animalslist:
 
-        for i in range(0, len(objects)):
-            object_ = objects[i]
-            if object_.name in animalslist:
-                return(object_.name)
+    f = open("animals.txt", 'r')
+    animalslist = f.read().splitlines()
+    f.close()
+
+    for i in range(0, len(objects)):
+        object_ = objects[i]
+        if object_.name in animalslist:
+            return(object_.name)
     
     return("Didn't find a valid animal.")
 #     # Search for animal and add image to DB
