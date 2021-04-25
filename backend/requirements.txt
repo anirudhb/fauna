@@ -11,3 +11,6 @@ requests
 filetype
 geoalchemy2
 geomet
+whatimage
+pyheif
+Pillow

@@ -39,6 +39,10 @@ from blake3 import blake3
 import datetime
 import mimetypes
 
+import pyheif
+import whatimage
+from PIL import Image
+
 app = Flask(__name__)
 
 
@@ -144,6 +148,7 @@ def upload():
     f = request.files["file"]
     real_name = f.filename
     content_bytes = f.stream.read()
+    content = io.BytesIO(content_bytes)
     name = blake3(content_bytes).hexdigest()
     # try:
     #     name = blake3(content_bytes).hexdigest() + "." + name.split(".")[-1]
@@ -154,13 +159,19 @@ def upload():
     #     else:
     #         name = blake3(content_bytes).hexdigest() + "." + ext.extension
 
+    if(whatimage.identify_image(content_bytes) == "heic"):
+        content = io.BytesIO()
+        heif_file = pyheif.read_heif(content_bytes)
+        image = Image.frombytes(heif_file.mode, heif_file.size, heif_file.data, "raw", heif_file.mode, heif_file.stride,)
+        image.save(content, format="JPEG")
+
     content_type, _ = mimetypes.guess_type(real_name)
     print("content type = ", content_type)
     storage_client = storage.Client()
     bucket = storage_client.bucket("fauna-images")
     blob = bucket.blob(name)
     blob.upload_from_file(
-        io.BytesIO(content_bytes),
+        content,
         content_type=content_type
         # content_type=mimetypes.guess_type(real_name)[0] or "application/octet-stream",
     )
