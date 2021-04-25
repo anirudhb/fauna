@@ -132,13 +132,10 @@ def identify():
             return(jsonify({"animals": object_.name})
     
     return("Didn't find a valid animal.")
-#     # Search for animal and add image to DB
-#     # Args - Image
-#     # Returns json - animal name and url of image
-#     return "Hello, World!"
+
 
 @app.route("/identifyall", methods=["GET"])
-def identify():
+def identifyall():
     try:
         uri = request.headers.get("url")
     except:
