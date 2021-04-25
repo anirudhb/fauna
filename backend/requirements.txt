@@ -11,5 +11,3 @@ requests
 filetype
 geoalchemy2
 geomet
-whatimage
-Pillow
