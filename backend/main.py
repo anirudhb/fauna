@@ -129,9 +129,9 @@ def identify():
     for i in range(0, len(objects)):
         object_ = objects[i]
         if object_.name in animalslist:
-            return(jsonify({"animals": object_.name})
+            return object_.name 
     
-    return("Didn't find a valid animal.")
+    return "Didn't find a valid animal."
 
 
 @app.route("/identifyall", methods=["GET"])
