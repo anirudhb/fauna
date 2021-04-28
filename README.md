@@ -25,7 +25,7 @@ Our app allows users to provide photos of wild animals they saw or encountered a
 
 Our tech stack relied heavily on Google's Cloud Platform. 
 
-Our API runs on **Google App Engine**
+Our API runs on **Google App Engine** yes
 Images are stored in **Google Cloud Storage**
 Animal Detection is done through **Google Vision**
 We use **Google Maps** for location data.
